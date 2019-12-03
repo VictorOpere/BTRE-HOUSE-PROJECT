@@ -121,5 +121,14 @@ venv
 
 # also our vscode settings
 
-.vscode
+vscode
+
+# also for static
+
+/static
+
+# also for media
+
+/media
+
 
