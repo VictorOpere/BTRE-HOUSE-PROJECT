@@ -174,18 +174,35 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                <form>
+                <form action="{% url 'contact' %}" method="POST" >
+                {% csrf_token %}
+                    {% if user.is_authenticated %}
+
+                        <input type="hidden" value="{{ user.id }}" name="user_id">
+
+                    {% else %}
+
+
+                        <input type="hidden" value="0" name="user_id">
+
+                    
+                    
+                    {% endif %}
+
+                    <input type="hidden" value="{{ listing.realtor.email }}" name="realtor_email">
+                    <input type="hidden" value="{{ listing.id }}" name="listing_id">
+
                     <div class="form-group">
-                    <label for="property_name" class="col-form-label">Property:</label>
-                    <input type="text" name="listing" class="form-control" value="45 Drivewood Cirlce" disabled>
+                    <label for="property_name" class="col-form-label">Property: </label>
+                    <input type="text" name="listing" class="form-control" value="{{ listing.address }}">
                     </div>
                     <div class="form-group">
                     <label for="name" class="col-form-label">Name:</label>
-                    <input type="text" name="name" class="form-control" required>
+                    <input type="text" name="name" class="form-control" required {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name}}"{% endif %}>
                     </div>
                     <div class="form-group">
                     <label for="email" class="col-form-label">Email:</label>
-                    <input type="email" name="email" class="form-control" required>
+                    <input type="email" name="email" class="form-control" required {% if user.is_authenticated %} value="{{ user.email }}"{% endif %}>
                     </div>
                     <div class="form-group">
                     <label for="phone" class="col-form-label">Phone:</label>
